@@ -304,9 +304,19 @@ def main():
 
     stu = hfuter(username=env_dist['username'], password=env_dist['password'])
     if stu.daily_checkin(env_dist['address']):
-        requests.post('https://sc.ftqq.com/'+env_dist['sckey']+'.send?text=自动打卡成功'+output_data)
+        requests.post('https://sctapi.ftqq.com/'+env_dist['sckey']+'.send?title=自动打卡成功')
     else:
-       requests.post('https://sc.ftqq.com/'+env_dist['sckey']+'.send?text=自动打开失败'+output_data)
+       requests.post('https://sctapi.ftqq.com/'+env_dist['sckey']+'.send?title=自动打开失败')
+
+# 阿里云的入口函数
+def handler(event, context):
+    main()
+
+
+# 腾讯云的入口函数
+def main_handler(event, context):
+    main()
+    return 'ok'    
 
 if __name__ == "__main__":
     main()
